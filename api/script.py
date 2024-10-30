@@ -30,7 +30,7 @@ def enviar_email():
         cursor = conn.cursor()
         
         cursor.execute("SELECT contato_id, e_mail FROM tb_contato")
-        emails = cursor.fetchall()  # Lista de emails com ids
+        emails = cursor.fetchall() 
         
         html_body_template = '''
         <h3>Oi, você quer confirmar?</h3>
@@ -41,7 +41,8 @@ def enviar_email():
             <button style="padding:10px; background-color:red; color:white; border:none; cursor:pointer;">Não</button>
         </a>
         '''
-        
+        #substituir a url do google por uma de agradecimento
+
         for contato_id, destinatario in emails:
             html_body = render_template_string(html_body_template, contato_id=contato_id)
             msg = Message("Confirmação", recipients=[destinatario])
@@ -62,7 +63,7 @@ def confirmar_email(id):
         conn = mysql.connector.connect(**db_config)
         cursor = conn.cursor()
         
-        # Atualiza o status do campo para true no banco de dados
+
         cursor.execute("UPDATE tb_contato SET renovado = 'true' WHERE contato_id = %s", (id,))
         conn.commit()
         
@@ -70,7 +71,7 @@ def confirmar_email(id):
         conn.close()
 
         # Redireciona para um site externo
-        return redirect("https://google.com")  # Altere para a URL desejada
+        return redirect("https://google.com")  # Altere para a de agradecimento quando concluida
     except Exception as e:
         return f"Erro ao atualizar confirmação: {str(e)}"
 
