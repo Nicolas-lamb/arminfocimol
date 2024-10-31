@@ -1,11 +1,17 @@
-const button = document.querySelector("#armdiv"); // 
-let modal = document.querySelector("dialog");// visualizar modal com infos
-const closeModal = document.querySelector("dialog button");//fechar janela modal com os detalhes do armario.
+function closeModal() {
+    document.getElementById("modal").style.display = "none";
+    document.querySelector(".background").style.display = "flex";
+    document.getElementById("botaoabrirmodal").style.display = "flex";
+  }
 
-button.onclick = function () {
-    modal.showModal()
-}
+  function openModal() {
+    document.getElementById("modal").style.display = "flex";
+    document.querySelector(".background").style.display = "none";
+    document.getElementById("botaoabrirmodal").style.display = "none";
+  }
 
-closeModal.onclick = function () {
-    modal.close()
-}
+
+  
+
+  document.getElementById("modal").style.display = "none";
+  document.querySelector(".background").style.display = "block";

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Modal de Armário</title>
+  <link rel="stylesheet" href="../src/style/style.css">
+</head>
+<body>
+  <div class="background"></div>
+
+  <!-- //ignorar, apenas para testar -->
+  <button id="botaoabrirmodal" onClick="openModal()" style="width: 150px; height: 100px; display: flex; justify-content: center; align-items: center; z-index: 1;">
+    <p>imagine que fosse um armario</p>
+  </button>
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h2 style="display: flex;">Armário ...</h2>
+      <button class="close-btn" onclick="closeModal()">X</button>
+      <hr style="height: 1px; background-color: #0F00E1 ; display: flex; width: 100%;">
+    </div>
+   
+    <div class="modal-content">
+        <div class="modalcontent2">
+
+            <div class="icon">
+                <img src="https://img.icons8.com/ios-filled/50/server.png" alt="Icone Servidor">
+            </div>
+            <div class="info">
+                <h3>Bruno Bernardo</h3>
+                <p class="turma">632A</p>
+                <div style="display: flex; justify-content: space-between;">
+                    <div class="status" style="display: flex;">
+                        <span class="status-dot"></span>
+                        <p>fev/24</p>
+                    </div>
+                    <p>Prédio C</p>
+                </div>
+            </div>
+      </div>
+    </div>
+    <button class="edit-btn">Editar armário</button>
+  </div>
+
+  <script src="../src/scripts/modal.js"></script>
+</body>
+</html>
