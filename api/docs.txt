@@ -1,0 +1,123 @@
+Aqui está uma documentação para a API que você criou:
+
+---
+
+## Documentação da API de Gerenciamento de Alunos e Armários
+
+### Endpoints
+
+#### 1. `/enviar_email`
+- **Método**: `GET`
+- **Descrição**: Envia um e-mail de confirmação para todos os alunos cadastrados.
+- **Retorno**: Mensagem de sucesso ou erro.
+- **Exemplo de Resposta**:
+    ```json
+    {
+      "mensagem": "E-mails enviados com sucesso!"
+    }
+    ```
+
+#### 2. `/confirmar_email/<int:id>`
+- **Método**: `GET`
+- **Descrição**: Confirma o e-mail de um aluno pelo `id` e atualiza o status de renovação no banco de dados(utilizada automaticamente depois da de enviar).
+- **Parâmetros**: `id` - o identificador do aluno.
+- **Retorno**: Redireciona para uma página externa de confirmação.
+  
+#### 3. `/login`
+- **Método**: `POST`
+- **Descrição**: Valida o login de um usuário.
+- **Requisição**: JSON com `email` e `senha`.
+- **Exemplo de Corpo da Requisição**:
+    ```json
+    {
+      "email": "usuario@exemplo.com",
+      "senha": "senha123"
+    }
+    ```
+- **Exemplo de Resposta**:
+    ```json
+    {
+      "message": "Login bem-sucedido",
+      "email": "usuario@exemplo.com"
+    }
+    ```
+
+#### 4. `/cadastroAluno`
+- **Método**: `POST`
+- **Descrição**: Cadastra um novo aluno no banco de dados.
+- **Requisição**: JSON com `nome`, `email` e `turma`.
+- **Exemplo de Corpo da Requisição**:
+    ```json
+    {
+      "nome": "João Silva",
+      "email": "joao@exemplo.com",
+      "turma": "3A"
+    }
+    ```
+- **Exemplo de Resposta**:
+    ```json
+    {
+      "mensagem": "Aluno cadastrado com sucesso."
+    }
+    ```
+
+#### 5. `/cadastroArmario`
+- **Método**: `POST`
+- **Descrição**: Cadastra um novo armário no banco de dados.
+- **Requisição**: JSON com `predio`.
+- **Exemplo de Corpo da Requisição**:
+    ```json
+    {
+      "predio": "A"
+    }
+    ```
+- **Exemplo de Resposta**:
+    ```json
+    {
+      "mensagem": "Armário cadastrado com sucesso."
+    }
+    ```
+
+#### 6. `/editarArmario`
+- **Método**: `POST`
+- **Descrição**: Edita um armário com base no status de reserva.
+- **Requisição**: JSON com `numero_armario`, `reservado`, `nome_aluno`, `email`, `turma`.
+- **Exemplo de Corpo da Requisição**:
+    ```json
+    {
+      "numero_armario": 101,
+      "reservado": true,
+      "nome_aluno": "Maria Oliveira",
+      "email": "maria@exemplo.com",
+      "turma": "2B"
+    }
+    ```
+- **Exemplo de Resposta**:
+    ```json
+    {
+      "mensagem": "Armário editado com sucesso."
+    }
+    ```
+
+#### 7. `/upload`
+- **Método**: `POST`
+- **Descrição**: Recebe um PDF e extrai dados dos alunos, salvando-os no banco de dados.
+- **Requisição**: Arquivo PDF.
+- **Exemplo de Resposta**:
+    ```json
+    [
+      {
+        "Nome": "Pedro Santos",
+        "Email": "pedro@exemplo.com",
+        "Turma": "1A"
+      }
+    ]
+    ```
+
+### Configurações
+
+#### Configuração de E-mail
+Utiliza o Flask-Mail para enviar e-mails. As configurações estão ajustadas para o Gmail. Altere `MAIL_USERNAME` e `MAIL_PASSWORD` conforme necessário para outros provedores de e-mail.
+
+#### Banco de Dados
+Usa PostgreSQL com a biblioteca `psycopg2`. As credenciais estão definidas em `db_config`.
