@@ -162,7 +162,7 @@ def editarArmario():
         return jsonify({'error': 'Erro de conexão com o banco de dados'}), 500
     try: 
         cursor = connection.cursor()
-        if reservado == False:
+        if reservado is False:
             cursor.execute("UPDATE armarios SET id_aluno = NULL, reservado = FALSE WHERE numero_armario = %s", (numero_armario,))
             connection.commit()
             return jsonify({'mensagem': 'Armário editado com sucesso.'}), 201
@@ -183,6 +183,22 @@ def editarArmario():
             return jsonify({'mensagem': 'Armário editado com sucesso.'}), 201
     except Exception as e:
         return f"Erro ao editar armário: {str(e)}"
+    finally:
+        cursor.close()
+        connection.close()
+
+@app.route("/listarArmarios", methods=['GET'])
+def listarArmarios():
+    connection = get_db_connection()
+    if connection is None:
+        return jsonify({'error': 'Erro de conexão com o banco de dados'}), 500
+    try:
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT * FROM armarios")
+        armarios = cursor.fetchall()  
+        return jsonify(armarios), 200  
+    except Error as e:
+        return jsonify({'error': str(e)}), 500  
     finally:
         cursor.close()
         connection.close()
