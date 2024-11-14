@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
 .barra-lateral {
-    width: 70px;
+    width: 11.5vh;
     height: 100vh;
     background-color: #ffd700;
     position: fixed;
@@ -12,15 +12,15 @@
   #titulo{
     font-family: "Inter", sans-serif;
     color: white;
-    font-size: 36px;
+    font-size: 2.5rem;
     margin: 5px;
   }
 
   #filtros{
     font-family: "Inter", sans-serif;
-    font-size: 15px; 
+    font-size: 1rem; 
     color: white;
-     margin: 10px;
+    margin: 10px;
   }
   
   .container {
@@ -30,11 +30,21 @@
     background-color: #12024f;
     padding: 20px;
     justify-content: center;
-    width: 1000px;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto; 
+  }
+
+  @media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
   }
   
   .card-armario {
-    width: 120px;
+    width: 90%;
+    max-width: 120px;
     height: 150px;
     background-color: #fff;
     color: #000;
@@ -76,10 +86,25 @@
   #headerbom {
     margin-left: 147px;
     justify-content: space-between;
-    width: 1221px; 
-    flex-direction: row;
-     display: flex;
-  }
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    #headerbom {
+        margin-left: 0;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    #headerbom {
+        max-width: 100%;
+        padding: 10px;
+    }
+}
 
   .barra-pesquisa {
     display: flex;
@@ -87,7 +112,23 @@
     background-color: #12024f;
     padding: 5px;
     border-radius: 5px;
-    width: 300px;
+    width: 30%;
+    margin-bottom: 10px;
+  }
+
+  /* Responsividade para telas muito pequenas */
+  @media (max-width: 480px) {
+    .card-armario {
+      width: 100%; /* Faz os cartões ocuparem toda a largura */
+    }
+
+    #titulo {
+      font-size: 1.5rem; /* Reduz o tamanho da fonte */
+    }
+
+    #filtros {
+      font-size: 0.9rem; /* Reduz o tamanho da fonte */
+    }
   }
   
   .input-pesquisa {

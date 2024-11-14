@@ -1,3 +1,5 @@
+const ARM_API = 'http://arminfocimol.onrender.com/';
+
 function criarArmario(numeroArmario, nomeAluno, corStatus) {
     const cardArmario = document.createElement('div');
     cardArmario.classList.add('card-armario');
