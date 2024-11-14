@@ -1,0 +1,149 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+.barra-lateral {
+    width: 70px;
+    height: 100vh;
+    background-color: #ffd700;
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
+  
+  #titulo{
+    font-family: "Inter", sans-serif;
+    color: white;
+    font-size: 36px;
+    margin: 5px;
+  }
+
+  #filtros{
+    font-family: "Inter", sans-serif;
+    font-size: 15px; 
+    color: white;
+     margin: 10px;
+  }
+  
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: #12024f;
+    padding: 20px;
+    justify-content: center;
+    width: 1000px;
+  }
+  
+  .card-armario {
+    width: 120px;
+    height: 150px;
+    background-color: #fff;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  
+  .indicador-status {
+    width: 10px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    left: -4px;
+  }
+  
+  .id-armario {
+    justify-content: left;
+    display: flex;
+    font-size: 1rem;
+    font-family: "Inter", sans-serif
+  }
+  
+  .nome-aluno {
+    margin-right: 40px;
+    font-size: 13px;
+    color: #000000;
+    font-family: "Inter", sans-serif
+  }
+  
+  body {
+    background-color: #12024f;
+  }
+
+  #headerbom {
+    margin-left: 147px;
+    justify-content: space-between;
+    width: 1221px; 
+    flex-direction: row;
+     display: flex;
+  }
+
+  .barra-pesquisa {
+    display: flex;
+    align-items: center;
+    background-color: #12024f;
+    padding: 5px;
+    border-radius: 5px;
+    width: 300px;
+  }
+  
+  .input-pesquisa {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    padding: 5px;
+    outline: none;
+  }
+  
+  .input-pesquisa::placeholder {
+    color: #bbb;
+  }
+  
+  .botao-pesquisa {
+    background-color: #d3d3d3;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .botao-pesquisa img {
+    width: 16px;
+    height: 16px;
+  }
+
+  .barra-predios {
+    display: flex;
+    align-items: center;
+    background-color: #ffd700;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .botao-predio {
+    background-color: transparent;
+    border: none;
+    color: #000;
+    cursor: pointer;
+    font-size: 1rem;
+  }
+  
+  .botao-predio:hover {
+    text-decoration: underline;
+  }
+  
+  .separador {
+    height: 20px;
+    width: 1px;
+    background-color: #000;
+    margin: 0 10px;
+  }
+  
+  
+
+  
