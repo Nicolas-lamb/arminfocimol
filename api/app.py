@@ -191,6 +191,21 @@ def listarArmarios():
         cursor.close()
         conn.close()
 
+@app.route("/listarAlunos", methods=['GET'])
+def listarAlunos():
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({'error': 'Erro de conexão com o banco de dados'}), 500
+
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM alunos")
+        alunos = cursor.fetchall()
+        return jsonify(alunos), 200
+    finally:
+        cursor.close()
+        conn.close()
+
 @app.route('/upload', methods=['POST'])
 def upload_pdf():
     if 'fileUpload' not in request.files:
