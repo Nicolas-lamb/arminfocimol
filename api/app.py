@@ -242,3 +242,4 @@ def extract_pdf_data(file_path):
 
 if __name__ == '__main__':
     app.run(debug=True, port=8080)
+
