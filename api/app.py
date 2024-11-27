@@ -1,12 +1,14 @@
 from flask import Flask, jsonify, render_template_string, redirect, url_for, request
+from flask_cors import CORS
 from flask_mail import Mail, Message
 import psycopg2  # Substitui o mysql.connector
 from psycopg2 import sql, Error  # Importa o módulo de erro de psycopg2
 import pdfplumber
 
 app = Flask(__name__)
+CORS(app)  # Permite CORS para todas as rotas por padrão
 
-# Configurações para o Flask-Mail (usando o Gmail como exemplo)
+# Configurações para o Flask-Mail
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
@@ -19,10 +21,10 @@ mail = Mail(app)
 
 # Configurações do banco de dados PostgreSQL
 db_config = {
-    'host': 'separately-worthy-boarfish.data-1.use1.tembo.io',       
-    'user': 'postgres',     
-    'password': 'GxDdnPUY8xnUKzO0',    
-    'database': 'postgres'     
+    'host': 'separately-worthy-boarfish.data-1.use1.tembo.io',
+    'user': 'postgres',
+    'password': 'GxDdnPUY8xnUKzO0',
+    'database': 'postgres'
 }
 
 def get_db_connection():
@@ -33,15 +35,16 @@ def get_db_connection():
         print(f"Erro na conexão: {e}")
         return None
 
+# Rotas
+
 @app.route("/enviar_email")
 def enviar_email():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        
         cursor.execute("SELECT id_aluno, email FROM alunos")
-        emails = cursor.fetchall() 
-        
+        emails = cursor.fetchall()
+
         html_body_template = '''
         <h3>Oi, você quer confirmar?</h3>
         <a href="{{ url_for('confirmar_email', id=id_aluno, _external=True) }}">
@@ -65,20 +68,15 @@ def enviar_email():
     except Exception as e:
         return f"Erro ao enviar e-mail: {str(e)}"
 
-# Rota para capturar a confirmação e atualizar o banco de dados
 @app.route("/confirmar_email/<int:id>")
 def confirmar_email(id):
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        
         cursor.execute("UPDATE alunos SET renovado = true WHERE id_aluno = %s", (id,))
         conn.commit()
-        
         cursor.close()
         conn.close()
-
-        # Redireciona para um site externo
         return redirect("https://google.com")
     except Exception as e:
         return f"Erro ao atualizar confirmação: {str(e)}"
@@ -92,23 +90,18 @@ def login():
     if not email or not senha:
         return jsonify({'error': 'Email e senha são necessários'}), 400
 
-    connection = get_db_connection()
-    if connection is None:
+    conn = get_db_connection()
+    if not conn:
         return jsonify({'error': 'Erro de conexão com o banco de dados'}), 500
 
     try:
-        cursor = connection.cursor()
+        cursor = conn.cursor()
         cursor.execute("SELECT * FROM usuarios WHERE email = %s AND senha = %s", (email, senha))
-        
         user = cursor.fetchone()
-        
-        if user:
-            return jsonify({'message': 'Login bem-sucedido', 'email': email}), 200
-        else:
-            return jsonify({'error': 'Nome de usuário ou senha incorretos'}), 401
+        return jsonify({'message': 'Login bem-sucedido', 'email': email}) if user else jsonify({'error': 'Credenciais inválidas'}), 401
     finally:
         cursor.close()
-        connection.close()
+        conn.close()
 
 @app.route("/cadastroAluno", methods=['POST'])
 def cadastroAluno():
@@ -117,36 +110,36 @@ def cadastroAluno():
     email = data.get('email')
     turma = data.get('turma')
 
-    connection = get_db_connection()
-    if connection is None:
+    conn = get_db_connection()
+    if not conn:
         return jsonify({'error': 'Erro de conexão com o banco de dados'}), 500
 
     try:
-        cursor = connection.cursor()
+        cursor = conn.cursor()
         cursor.execute("INSERT INTO alunos (nome, email, turma) VALUES (%s, %s, %s)", (nome, email, turma))
-        connection.commit()
+        conn.commit()
         return jsonify({'mensagem': 'Aluno cadastrado com sucesso.'}), 201
     finally:
         cursor.close()
-        connection.close()
+        conn.close()
 
-@app.route("/cadastroArmario", methods= ['POST'])
+@app.route("/cadastroArmario", methods=['POST'])
 def cadastroArmario():
     data = request.json
     predio = data.get('predio')
 
-    connection = get_db_connection()
-    if connection is None:
+    conn = get_db_connection()
+    if not conn:
         return jsonify({'error': 'Erro de conexão com o banco de dados'}), 500
 
     try:
-        cursor = connection.cursor()
+        cursor = conn.cursor()
         cursor.execute("INSERT INTO armarios (predio) VALUES (%s)", (predio,))
-        connection.commit()
+        conn.commit()
         return jsonify({'mensagem': 'Armário cadastrado com sucesso.'}), 201
     finally:
         cursor.close()
-        connection.close()
+        conn.close()
 
 @app.route("/editarArmario", methods=['POST'])
 def editarArmario():
@@ -157,51 +150,46 @@ def editarArmario():
     email = data.get("email")
     turma = data.get("turma")
 
-    connection = get_db_connection()
-    if connection is None:
+    conn = get_db_connection()
+    if not conn:
         return jsonify({'error': 'Erro de conexão com o banco de dados'}), 500
+
     try: 
-        cursor = connection.cursor()
-        if reservado is False:
+        cursor = conn.cursor()
+        if not reservado:
             cursor.execute("UPDATE armarios SET id_aluno = NULL, reservado = FALSE WHERE numero_armario = %s", (numero_armario,))
-            connection.commit()
-            return jsonify({'mensagem': 'Armário editado com sucesso.'}), 201
         else:
             cursor.execute("SELECT id_aluno FROM alunos WHERE email = %s", (email,))
             aluno = cursor.fetchone()
-            if aluno:
-                aluno_id = aluno[0]
-            else:
+            aluno_id = aluno[0] if aluno else None
+
+            if not aluno_id:
                 cursor.execute("INSERT INTO alunos (nome, email, turma) VALUES (%s, %s, %s)", (nome, email, turma))
-                connection.commit()
+                conn.commit()
                 cursor.execute("SELECT id_aluno FROM alunos WHERE email = %s", (email,))
-                aluno = cursor.fetchone()
-                aluno_id = aluno[0]
+                aluno_id = cursor.fetchone()[0]
 
             cursor.execute("UPDATE armarios SET id_aluno = %s, reservado = TRUE WHERE numero_armario = %s", (aluno_id, numero_armario))
-            connection.commit()
-            return jsonify({'mensagem': 'Armário editado com sucesso.'}), 201
-    except Exception as e:
-        return f"Erro ao editar armário: {str(e)}"
+        conn.commit()
+        return jsonify({'mensagem': 'Armário editado com sucesso.'}), 201
     finally:
         cursor.close()
-        connection.close()
+        conn.close()
 
 @app.route("/listarArmarios", methods=['GET'])
 def listarArmarios():
-    connection = get_db_connection()
-    if connection is None:
+    conn = get_db_connection()
+    if not conn:
         return jsonify({'error': 'Erro de conexão com o banco de dados'}), 500
+
     try:
-        cursor = connection.cursor(dictionary=True)
+        cursor = conn.cursor()
         cursor.execute("SELECT * FROM armarios")
-        armarios = cursor.fetchall()  
-        return jsonify(armarios), 200  
-    except Error as e:
-        return jsonify({'error': str(e)}), 500  
+        armarios = cursor.fetchall()
+        return jsonify(armarios), 200
     finally:
         cursor.close()
-        connection.close()
+        conn.close()
 
 @app.route('/upload', methods=['POST'])
 def upload_pdf():
@@ -209,52 +197,33 @@ def upload_pdf():
         return "Nenhum arquivo enviado.", 400
 
     file = request.files['fileUpload']
-    if file.filename == '':
+    if not file.filename:
         return "Arquivo inválido.", 400
 
     file_path = f"./{file.filename}"
     file.save(file_path)
-
     extracted_data = extract_pdf_data(file_path)
-
     return jsonify(extracted_data)
 
 def extract_pdf_data(file_path):
-    data = []  
+    data = []
     with pdfplumber.open(file_path) as pdf:
         for page in pdf.pages:
             text = page.extract_text()
             if text:
-                lines = text.splitlines()
-
-                for line in lines[1:]:
+                for line in text.splitlines()[1:]:
                     columns = line.split()
-                    
                     if len(columns) >= 3:
-                        nome = " ".join(columns[:-2])
-                        email = columns[-2]
-                        turma = columns[-1]
+                        nome, email, turma = " ".join(columns[:-2]), columns[-2], columns[-1]
+                        data.append({"Nome": nome, "Email": email, "Turma": turma})
 
-                        entry = {
-                            "Nome": nome,
-                            "Email": email,
-                            "Turma": turma
-                        }
-                        data.append(entry)
-                        
                         conn = get_db_connection()
                         cursor = conn.cursor()
-                        cursor.execute('''
-                            INSERT INTO alunos (nome, email, turma)
-                            VALUES (%s, %s, %s)
-                        ''', (nome, email, turma))
-
+                        cursor.execute("INSERT INTO alunos (nome, email, turma) VALUES (%s, %s, %s)", (nome, email, turma))
                         conn.commit()
                         cursor.close()
                         conn.close()
-    
-    return data 
-            
+    return data
 
 #if __name__ == '__main__':
-   #  app.run(debug=True, port=8080)
+    #app.run(debug=True, port=8080)
