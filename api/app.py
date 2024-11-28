@@ -219,21 +219,7 @@ def listarAlunos():
     finally:
         cursor.close()
         conn.close()
-
-@app.route("/estadoPago", methods=['GET'])
-def listarAlunos():
-    conn = get_db_connection()
-    if not conn:
-        return jsonify({'error': 'Erro de conexão com o banco de dados'}), 500
-
-    try:
-        cursor = conn.cursor()
-        cursor.execute("SELECT * FROM alunos order by id_aluno;")
-        alunos = cursor.fetchall()
-        return jsonify(alunos), 200
-    finally:
-        cursor.close()
-        conn.close()
+        
 @app.route('/liberar_armario/<int:numero_armario>', methods=['PUT'])
 def liberar_armario(numero_armario):
     try:
