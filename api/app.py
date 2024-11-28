@@ -182,6 +182,7 @@ def editarArmario():
                 cursor.execute("SELECT id_aluno FROM alunos WHERE email = %s", (email,))
                 aluno_id = cursor.fetchone()[0]
 
+            
             cursor.execute("UPDATE armarios SET id_aluno = %s, reservado = TRUE WHERE numero_armario = %s", (aluno_id, numero_armario))
         conn.commit()
         return jsonify({'mensagem': 'Armário editado com sucesso.'}), 201
@@ -218,6 +219,41 @@ def listarAlunos():
     finally:
         cursor.close()
         conn.close()
+
+@app.route("/estadoPago", methods=['GET'])
+def listarAlunos():
+    conn = get_db_connection()
+    if not conn:
+        return jsonify({'error': 'Erro de conexão com o banco de dados'}), 500
+
+    try:
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM alunos order by id_aluno;")
+        alunos = cursor.fetchall()
+        return jsonify(alunos), 200
+    finally:
+        cursor.close()
+        conn.close()
+@app.route('/liberar_armario/<int:numero_armario>', methods=['PUT'])
+def liberar_armario(numero_armario):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        
+        # Atualiza o armário para não reservado e id_aluno como NULL
+        cursor.execute("""
+            UPDATE armarios
+            SET reservado = FALSE, id_aluno = NULL
+            WHERE numero_armario = %s
+        """, (numero_armario,))
+        
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        return jsonify({'mensagem': f'O armário {numero_armario} foi liberado com sucesso.'}), 200
+    except Exception as e:
+        return jsonify({'erro': f'Erro ao liberar o armário: {str(e)}'}), 500
 
 @app.route('/upload', methods=['POST'])
 def upload_pdf():
