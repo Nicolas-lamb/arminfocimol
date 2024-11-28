@@ -42,7 +42,7 @@ def enviar_email():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT id_aluno, email FROM alunos")
+        cursor.execute("SELECT id_aluno, email FROM alunos WHERE renovado = NULL OR renovado= 'false'")
         emails = cursor.fetchall()
 
         html_body_template = '''
@@ -50,7 +50,7 @@ def enviar_email():
         <a href="{{ url_for('confirmar_email', id=id_aluno, _external=True) }}">
             <button style="padding:10px; background-color:green; color:white; border:none; cursor:pointer;">Sim</button>
         </a>
-        <a href="https://google.com"> 
+        <a href="{{ url_for('rejeitar_email', id=id_aluno, _external=True) }}">
             <button style="padding:10px; background-color:red; color:white; border:none; cursor:pointer;">Não</button>
         </a>
         '''
@@ -74,6 +74,19 @@ def confirmar_email(id):
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute("UPDATE alunos SET renovado = true WHERE id_aluno = %s", (id,))
+        conn.commit()
+        cursor.close()
+        conn.close()
+        return redirect("https://google.com")
+    except Exception as e:
+        return f"Erro ao atualizar confirmação: {str(e)}"
+    
+@app.route("/rejeitar_email/<int:id>")
+def rejeitar_email(id):
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        cursor.execute("UPDATE alunos SET renovado = false WHERE id_aluno = %s", (id,))
         conn.commit()
         cursor.close()
         conn.close()
