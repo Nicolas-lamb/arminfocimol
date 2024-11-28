@@ -64,9 +64,9 @@ def enviar_email():
         cursor.close()
         conn.close()
 
-        return "E-mails enviados com sucesso!"
+        return jsonify({'message': 'E-mails enviados com sucesso!'}), 200
     except Exception as e:
-        return f"Erro ao enviar e-mail: {str(e)}"
+        return jsonify({'error': f'Erro ao enviar e-mail: {str(e)}'}), 500
 
 @app.route("/confirmar_email/<int:id>")
 def confirmar_email(id):
