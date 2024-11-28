@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="../../src/styles/home.css">
+</head>
+
+<body>
+
+    <div class="barra-lateral">
+    </div>
+
+    <div id="headerbom">
+        <div id="tituloefiltro">
+            <p id="titulo">Armarios</p>
+        </div>
+
+        <!-- <div class="barra-pesquisa">
+                <input type="text" class="input-pesquisa" placeholder="Pesquisar...">
+                <button class="botao-pesquisa">
+                    <img src="../../assets/icone-lupa.png" alt="Ícone de pesquisa">
+                </button>
+            </div> -->
+
+    </div>
+
+    <div style="display: flex; align-items: center; justify-content: center;">
+        <div class="container" id="containerArmarios">
+
+        </div>
+    </div>
+
+    <div style="justify-content: center; display: flex;">
+        <div class="barra-predios">
+            <button onclick="renderizarArmariosA()" class="botao-predio">Prédio A</button>
+            <span class="separador"></span>
+            <button onclick="renderizarArmariosB()" class="botao-predio">Prédio B</button>
+            <span class="separador"></span>
+            <button onclick="renderizarArmariosC()" class="botao-predio">Prédio C</button>
+            <span class="separador"></span>
+            <button onclick="renderizarArmariosD()" class="botao-predio">Prédio D</button>
+        </div>
+    </div>
+    <div id="background">
+        <div class="modal" id="modal">
+            <div class="modal-header">
+                <h2 id="armarioNum" style="display: flex;">Armário</h2>
+                <button class="close-btn" onclick="closeModal()">X</button>
+                <hr style="height: 1px; background-color: #0F00E1 ; display: flex; width: 100%;">
+            </div>
+
+            <div class="modal-content">
+                <div class="modalcontent2">
+                    <div class="icon">
+                        <img src="https://img.icons8.com/ios-filled/50/server.png" alt="Icone Servidor">
+                    </div>
+                    <div class="info">
+                        <h3 id="nomeSelec"></h3>
+                        <p class="turma">632A</p>
+                        <div style="display: flex; justify-content: space-between; flex-direction: column;">
+                            <div class="status" style="display: flex;">
+                                <span class="status-dot"></span>
+                                <p>fev/24</p>
+                            </div>
+                            <p id="predio">  Prédio C</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button class="edit-btn">Editar armário</button>
+        </div>
+        <button id="armDiv" style="display: flex; margin: 2vh 0 0 2vw; height: 180px; width: 120px; border: 2px solid blue;">
+            <div class="contentCotainer" style="align-content: center;">
+                <h2 class="tituloArm" style="margin-bottom: 40px;">ARM 2</h2>
+                <p class="tipoClient">aluno</p>
+                <p class="nomeClient">Fulano belt</p>
+            </div>
+        </button>
+    </div>
+
+    <div id="resListarArmarios"></div>
+
+    <script src="../../src/scripts/home.js"></script>
+</body>
+
+</html>

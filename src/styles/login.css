@@ -1,0 +1,118 @@
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: flex-start; /* Itens alinhados à esquerda */
+    align-items: center;
+    background: linear-gradient(25deg, #1E144F 75%, #FFDD00 25%); /* Diagonal do canto superior esquerdo */
+}
+
+/* Logotipo */
+.header {
+    position: absolute;
+    top: 25px;
+    right: 25px;
+}
+
+.logo {
+    height: 28vh;
+}
+
+/* Conteúdo principal */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 150px;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+}
+
+.login-box {
+    color: white;
+    max-width: 400px;
+    padding: 20px;
+    text-align: left;
+}
+
+h1 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+}
+
+h2 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 90px;
+}
+
+/* Campos de entrada */
+.input-box {
+    margin-bottom: 5px;
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 15px;
+    border-radius: 8px;
+    border: none;
+    background-color: #FFFFFF;
+    color: #333;
+    font-size: 16px;
+    text-align: left; 
+}
+
+/* Botão */
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: #FFDD00;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    color: #1E144F;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    margin-top: 25px;
+
+}
+
+button:hover {
+    background-color: #FFC800;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .login-box {
+        width: 90%;
+        text-align: center;
+
+    }
+    
+    .login-container {
+        justify-content: center; 
+        padding-left: 70px;
+    }
+
+    .logo {
+        height: 21vh;
+    }
+
+    h1 {
+        margin-bottom: 10px;
+    }
+    
+    h2 {
+        margin-bottom: 45px;
+    }
+}

@@ -1,0 +1,303 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+.barra-lateral {
+    width: 11.5vh;
+    height: 100vh;
+    background-color: #ffd700;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+#titulo {
+    font-family: "Inter", sans-serif;
+    color: white;
+    font-size: 2.5rem;
+    margin: 5px;
+}
+
+#filtros {
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    color: white;
+    margin: 10px;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: #12024f;
+    padding: 20px;
+    justify-content: center;
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.card-armario {
+    width: 90%;
+    max-width: 120px;
+    height: 150px;
+    background-color: #fff;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.indicador-status {
+    width: 10px;
+    height: 20px;
+    position: absolute;
+    top: 10px;
+    left: -4px;
+}
+
+.id-armario {
+    justify-content: left;
+    display: flex;
+    font-size: 1rem;
+    font-family: "Inter", sans-serif
+}
+
+.nome-aluno {
+    margin-right: 40px;
+    font-size: 13px;
+    color: #000000;
+    font-family: "Inter", sans-serif
+}
+
+body {
+    background-color: #12024f;
+}
+
+#headerbom {
+    margin-left: 147px;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 980px;
+    display: flex;
+}
+
+@media (max-width: 768px) {
+    #headerbom {
+        margin-left: 0;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 480px) {
+    #headerbom {
+        max-width: 100%;
+        padding: 10px;
+    }
+}
+
+.barra-pesquisa {
+    display: flex;
+    align-items: center;
+    background-color: #12024f;
+    padding: 5px;
+    border-radius: 5px;
+    width: 30%;
+    margin-bottom: 10px;
+}
+
+/* Responsividade para telas muito pequenas */
+@media (max-width: 480px) {
+    .card-armario {
+        width: 100%;
+        /* Faz os cartões ocuparem toda a largura */
+    }
+
+    #titulo {
+        font-size: 1.5rem;
+        /* Reduz o tamanho da fonte */
+    }
+
+    #filtros {
+        font-size: 0.9rem;
+        /* Reduz o tamanho da fonte */
+    }
+}
+
+.input-pesquisa {
+    flex: 1;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    padding: 5px;
+    outline: none;
+}
+
+.input-pesquisa::placeholder {
+    color: #bbb;
+}
+
+.botao-pesquisa {
+    background-color: #d3d3d3;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.botao-pesquisa img {
+    width: 16px;
+    height: 16px;
+}
+
+.barra-predios {
+    display: flex;
+    align-items: center;
+    background-color: #ffd700;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.botao-predio {
+    background-color: transparent;
+    border: none;
+    color: #000;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.botao-predio:hover {
+    text-decoration: underline;
+}
+
+.separador {
+    height: 20px;
+    width: 1px;
+    background-color: #000;
+    margin: 0 10px;
+}
+
+#background{
+    position: absolute; 
+    background-color: rgba(0, 0, 0, 0.7); 
+    height: 100%; 
+    width: 100%; 
+    justify-content: center; 
+    align-items: center;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+.modal {
+    width: 700px;
+    height: 450px;
+    background-color: white;
+    border-radius: 25px;
+    padding: 20px;
+    position: relative;
+    z-index: 2;
+    flex-direction: column;
+    display: flex;
+}
+
+
+.modal-header {
+    display: flex;
+    margin-bottom: 15px;
+    flex-direction: column;
+}
+
+.modal-header h2 {
+    font-size: 36px;
+    margin: 0;
+}
+
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+    position: absolute;
+    right: 40px;
+    top: 30px;
+}
+
+
+.modal-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    height: 100%;
+}
+
+.modalcontent2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.icon img {
+    width: 117px;
+    margin-right: 15px;
+}
+
+.info h3 {
+    font-size: 44.42px;
+    margin: 0;
+}
+
+.info p {
+    margin: 2px 0;
+    font-size: 24.68px;
+}
+
+
+.status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.status-dot {
+    width: 35px;
+    height: 35px;
+    background-color: #00CC00;
+    border-radius: 50%;
+}
+
+
+.edit-btn {
+    padding: 10px;
+    border: 2px solid #5C32D4;
+    border-radius: 5px;
+    background-color: white;
+    color: #5C32D4;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.edit-btn:hover {
+    background-color: #5C32D4;
+    color: white;
+}
+
+.turma {
+    font-size: 29.61px;
+}
