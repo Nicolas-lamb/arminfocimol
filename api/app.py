@@ -197,7 +197,7 @@ def listarArmarios():
 
     try:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM armarios")
+        cursor.execute("SELECT * FROM armarios order by numero_armario ")
         armarios = cursor.fetchall()
         return jsonify(armarios), 200
     finally:
@@ -212,7 +212,7 @@ def listarAlunos():
 
     try:
         cursor = conn.cursor()
-        cursor.execute("SELECT * FROM alunos")
+        cursor.execute("SELECT * FROM alunos order by id_aluno;")
         alunos = cursor.fetchall()
         return jsonify(alunos), 200
     finally:
