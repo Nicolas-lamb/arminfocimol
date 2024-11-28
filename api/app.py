@@ -42,7 +42,7 @@ def enviar_email():
     try:
         conn = get_db_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT id_aluno, email FROM alunos WHERE renovado = NULL OR renovado= 'false'")
+        cursor.execute("SELECT id_aluno, email FROM alunos WHERE renovado IS NULL OR renovado= 'false'")
         emails = cursor.fetchall()
 
         html_body_template = '''
@@ -219,7 +219,7 @@ def listarAlunos():
     finally:
         cursor.close()
         conn.close()
-        
+
 @app.route('/liberar_armario/<int:numero_armario>', methods=['PUT'])
 def liberar_armario(numero_armario):
     try:
